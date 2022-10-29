@@ -4,7 +4,7 @@
     <!--Import Google Icon Font-->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!--Import materialize.css-->
-    <link type="text/css" rel="stylesheet" href="/materialize/materialize/css/materialize.min.css"  media="screen,projection"/>
+    <link type="text/css" rel="stylesheet" href="./materialize/materialize/css/materialize.min.css"  media="screen,projection"/>
 
     <!--Let browser know website is optimized for mobile-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -26,7 +26,7 @@
     </header>
 
     <div>
-        <img width="100%" src="/Img/pexels-pixabay-269077.jpg">
+        <img width="100%" src="./Img/pexels-pixabay-269077.jpg">
         <br>
         <br>
     </div>
@@ -37,37 +37,6 @@
 
 
     <!--JavaScript at end of body for optimized loading-->
-    <script type="text/javascript" src="/materialize/materialize/js/materialize.min.js"></script>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-        var elems = document.querySelectorAll('.sidenav');
-        var instances = M.Sidenav.init(elems, options);
-    });
-
-        // Or with jQuery
-
-        $(document).ready(function(){
-        $('.sidenav').sidenav();
-    });
-    </script> 
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-        var elems = document.querySelectorAll('.materialboxed');
-        var instances = M.Materialbox.init(elems, options);
-    });
-
-  // Or with jQuery
-
-    $(document).ready(function(){
-        $('.materialboxed').materialbox();
-    });
-      
-    </script>
-
-    
+    <script type="text/javascript" src="./materialize/materialize/js/materialize.min.js"></script>
   </body>
 </html>
-
-
