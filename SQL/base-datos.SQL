@@ -1,5 +1,6 @@
 
-//Crear tabla// Tabla cliente//
+-- //Crear tabla //
+-- Tabla cliente//--
 CREATE TABLE clientes (
 	id INT(50) NOT NULL AUTO_INCREMENT,
 	nombre VARCHAR(50) NOT NULL,
@@ -7,11 +8,11 @@ CREATE TABLE clientes (
 	documento VARCHAR(20) NOT NULL,
 	telefono VARCHAR(20) not null,
 	PRIMARY KEY(id)
-);  
+);  --Fin--
  
 SELECT * FROM clientes;
 
-//INGRESO CLIENTES//
+-- //INGRESO CLIENTES//--
  INSERT clientes (nombre, apellido, documento, telefono)  
 	VALUES ("Iryna", "Alvarado", "1.141.111-5","093123223");
 INSERT clientes (nombre, apellido, documento, telefono)  
@@ -20,9 +21,9 @@ INSERT clientes (nombre, apellido, documento, telefono)
 	VALUES ("Svetlana", "Puente", "4.111.511-3","093123211");
 INSERT clientes (nombre, apellido, documento, telefono)  
 	VALUES ("Angela", "Maria Roig", "3.541.143-2","094123325");
-//FIN
+-- //FIN--
 
-//Comienzo Empleados//
+-- //Comienzo Empleados//--
 
 CREATE TABLE empleados (
 	id INT(50) NOT NULL AUTO_INCREMENT,
@@ -30,11 +31,9 @@ CREATE TABLE empleados (
 	apellido VARCHAR(50) NOT NULL,
 	cargo VARCHAR(50) NOT NULL,
 	PRIMARY KEY(id)
-); 
+); -- //Fin
 
-//Fin
-
-//Comienzo Envios//
+-- //Comienzo Envios//
 
 CREATE TABLE envios (
 	id INT(50) NOT NULL AUTO_INCREMENT,
@@ -43,7 +42,7 @@ CREATE TABLE envios (
 	ciudad VARCHAR(50) NOT NULL,
 	estado ENUM("Pendiente", "En camino", "Entregado"),
 	PRIMARY KEY(id)
-); 
+); --Fin--
 
 --Nombres Empleados--
 SELECT nombre FROM empleados;
