@@ -1,48 +1,98 @@
 
--- //Crear tabla //
--- Tabla cliente//--
-CREATE TABLE clientes (
-	id INT(50) NOT NULL AUTO_INCREMENT,
+
+--Crear tabla// Tabla cliente--
+CREATE TABLE cliente (
+	CI INT(20) NOT NULL,
 	nombre VARCHAR(50) NOT NULL,
 	apellido VARCHAR(50) NOT NULL,
-	documento VARCHAR(20) NOT NULL,
-	telefono VARCHAR(20) not null,
-	PRIMARY KEY(id)
-);  --Fin--
+	telefono VARCHAR(50) not null,
+	PRIMARY KEY(CI)
+);  
  
-SELECT * FROM clientes;
+SELECT * FROM cliente;
+--FIN--
 
--- //INGRESO CLIENTES//--
- INSERT clientes (nombre, apellido, documento, telefono)  
-	VALUES ("Iryna", "Alvarado", "1.141.111-5","093123223");
-INSERT clientes (nombre, apellido, documento, telefono)  
-	VALUES ("Guillem", "Mansilla", "6.161.141-4","093123122");
-INSERT clientes (nombre, apellido, documento, telefono)  
-	VALUES ("Svetlana", "Puente", "4.111.511-3","093123211");
-INSERT clientes (nombre, apellido, documento, telefono)  
-	VALUES ("Angela", "Maria Roig", "3.541.143-2","094123325");
--- //FIN--
+--INGRESO CLIENTE--
+ INSERT cliente (ci, nombre, apellido,telefono)  
+	VALUES ("11411115","Iryna", "Alvarado","093123223");
+INSERT cliente (CI,nombre, apellido,telefono)  
+	VALUES ("61611414","Guillem", "Mansilla","093123122");
+INSERT cliente (CI,nombre, apellido,telefono)  
+	VALUES ("41115113","Svetlana", "Puente","093123211");
+INSERT cliente (CI,nombre, apellido, telefono)  
+	VALUES ("35411432","Angela", "Maria Roig","094123325");
+--FIN--
 
--- //Comienzo Empleados//--
+--Comienzo paquete--
 
-CREATE TABLE empleados (
-	id INT(50) NOT NULL AUTO_INCREMENT,
-	nombre VARCHAR(50) NOT NULL,
-	apellido VARCHAR(50) NOT NULL,
-	cargo VARCHAR(50) NOT NULL,
-	PRIMARY KEY(id)
-); -- //Fin
-
--- //Comienzo Envios//
-
-CREATE TABLE envios (
-	id INT(50) NOT NULL AUTO_INCREMENT,
-	nombre_cliente VARCHAR(50) NOT NULL,
+CREATE TABLE paquete (
+	codigo INT(50) NOT NULL AUTO_INCREMENT,
 	destinatario VARCHAR(50) NOT NULL,
 	ciudad VARCHAR(50) NOT NULL,
-	estado ENUM("Pendiente", "En camino", "Entregado"),
+	calle VARCHAR(50) NOT NULL,
+	puerta INT(50) NOT NULL,
+	FechaRecibido DATE NOT NULL,
+	PRIMARY KEY(codigo)
+);
+
+SELECT * FROM paquete;
+
+--
+ INSERT paquete(codigo, destinatario, ciudad,calle, puerta, FechaRecibido)  
+	VALUES ("1","Mateo","Montevideo","18 de julio","4119","2022-11-20");
+ INSERT paquete(destinatario, ciudad,calle, puerta, FechaRecibido)  
+	VALUES ("Agustin","Montevideo","General Hornos","2131","2022-10-21");
+ INSERT paquete(destinatario, ciudad,calle, puerta, FechaRecibido) 
+	VALUES ("Marcos","Canelones","Avenida Canelones","2131","2022-11-23");
+ INSERT paquete(destinatario, ciudad,calle, puerta, FechaRecibido) 
+	VALUES ("Rodrigo","Artigas","Avenida Maldonado","2131","2022-11-22");
+--FIN--
+
+
+--Comienzo estado--
+
+CREATE TABLE estado (
+	id INT(50) NOT NULL AUTO_INCREMENT,
+	nombre VARCHAR(50) NOT NULL,
 	PRIMARY KEY(id)
-); --Fin--
+); 
+
+ INSERT estado(id,nombre)  
+	VALUES ();
+ INSERT paquete(destinatario, ciudad,calle, puerta, FechaRecibido)  
+	VALUES ("Agustin","Montevideo","General Hornos","2131","2022-10-21");
+ INSERT paquete(destinatario, ciudad,calle, puerta, FechaRecibido) 
+	VALUES ("Marcos","Canelones","Avenida Canelones","2131","2022-11-23");
+ INSERT paquete(destinatario, ciudad,calle, puerta, FechaRecibido) 
+	VALUES ("Rodrigo","Artigas","Avenida Maldonado","2131","2022-11-22");
+
+SELECT * FROM estado;
+--FIN--
+
+--Funcionarios--
+CREATE TABLE funcionarios (
+	CI INT(20) NOT NULL,
+	nombre VARCHAR(50) NOT NULL,
+	apellido VARCHAR(50) NOT NULL,
+	telefono VARCHAR(50) NOT NULL,
+	correo VARCHAR(50) NOT NULL,
+	cargo VARCHAR(50) NOT NULL,
+	primary KEY (CI)
+); 
+
+SELECT * FROM funcionarios;
+--FIN--
+
+--
+ INSERT cliente (ci, nombre, apellido,telefono)  
+	VALUES ("11411115","Iryna", "Alvarado","093123223");
+INSERT cliente (CI,nombre, apellido,telefono)  
+	VALUES ("61611414","Guillem", "Mansilla","093123122");
+INSERT cliente (CI,nombre, apellido,telefono)  
+	VALUES ("41115113","Svetlana", "Puente","093123211");
+INSERT cliente (CI,nombre, apellido, telefono)  
+	VALUES ("35411432","Angela", "Maria Roig","094123325");
+--FIN--
 
 --Nombres Empleados--
 SELECT nombre FROM empleados;
@@ -57,4 +107,7 @@ SELECT apellido FROM clientes;
 SELECT * FROM clientes WHERE nombre LIKE "%MA%";
 
 --Buscar cosas en tabla empleados--
-SELECT * FROM empleados WHERE nombre LIKE "%l%"; 
+SELECT * FROM empleados WHERE nombre LIKE "%l%";
+
+--eliminar tablas--
+drop table paquete;
