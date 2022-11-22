@@ -59,12 +59,6 @@ CREATE TABLE estado (
 
  INSERT estado(id,nombre)  
 	VALUES ();
- INSERT paquete(destinatario, ciudad,calle, puerta, FechaRecibido)  
-	VALUES ("Agustin","Montevideo","General Hornos","2131","2022-10-21");
- INSERT paquete(destinatario, ciudad,calle, puerta, FechaRecibido) 
-	VALUES ("Marcos","Canelones","Avenida Canelones","2131","2022-11-23");
- INSERT paquete(destinatario, ciudad,calle, puerta, FechaRecibido) 
-	VALUES ("Rodrigo","Artigas","Avenida Maldonado","2131","2022-11-22");
 
 SELECT * FROM estado;
 --FIN--
