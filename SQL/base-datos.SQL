@@ -1,5 +1,4 @@
 
-
 --Crear tabla// Tabla cliente--
 CREATE TABLE cliente (
 	CI INT(20) NOT NULL,
@@ -25,40 +24,52 @@ INSERT cliente (CI,nombre, apellido, telefono)
 
 --Comienzo paquete--
 
-CREATE TABLE paquete (
-	codigo INT(50) NOT NULL AUTO_INCREMENT,
+drop table envio;
+
+CREATE TABLE envio(
+	id INT (50) NOT NULL auto_increment,
 	destinatario VARCHAR(50) NOT NULL,
 	ciudad VARCHAR(50) NOT NULL,
 	calle VARCHAR(50) NOT NULL,
 	puerta INT(50) NOT NULL,
 	FechaRecibido DATE NOT NULL,
-	PRIMARY KEY(codigo)
+	id_estado INT(3),
+	PRIMARY KEY(id),
+	KEY id_estado(id_estado),
+	constraint fk_id_estado_id foreign key (id_estado) references estado(id)
 );
 
-SELECT * FROM paquete;
+SELECT * FROM envio;
 
 --
- INSERT paquete(codigo, destinatario, ciudad,calle, puerta, FechaRecibido)  
-	VALUES ("1","Mateo","Montevideo","18 de julio","4119","2022-11-20");
- INSERT paquete(destinatario, ciudad,calle, puerta, FechaRecibido)  
+ INSERT envio(destinatario, ciudad,calle, puerta, FechaRecibido)  
+	VALUES ("Mateo","Montevideo","18 de julio","4119","2022-11-20");
+ INSERT envio(destinatario, ciudad,calle, puerta, FechaRecibido)  
 	VALUES ("Agustin","Montevideo","General Hornos","2131","2022-10-21");
- INSERT paquete(destinatario, ciudad,calle, puerta, FechaRecibido) 
+ INSERT envio(destinatario, ciudad,calle, puerta, FechaRecibido)   
 	VALUES ("Marcos","Canelones","Avenida Canelones","2131","2022-11-23");
- INSERT paquete(destinatario, ciudad,calle, puerta, FechaRecibido) 
+ INSERT envio(destinatario, ciudad,calle, puerta, FechaRecibido)    
 	VALUES ("Rodrigo","Artigas","Avenida Maldonado","2131","2022-11-22");
 --FIN--
 
 
 --Comienzo estado--
 
+drop table estado;
+
 CREATE TABLE estado (
-	id INT(50) NOT NULL AUTO_INCREMENT,
+	id INT(3) NOT NULL,
 	nombre VARCHAR(50) NOT NULL,
 	PRIMARY KEY(id)
 ); 
 
  INSERT estado(id,nombre)  
-	VALUES ();
+	VALUES ("1","pendiente");
+insert estado(id,nombre)
+	values ("2","enviado");
+insert estado(id,nombre)
+	values ("3","recibido");
+
 
 SELECT * FROM estado;
 --FIN--
@@ -104,4 +115,4 @@ SELECT * FROM clientes WHERE nombre LIKE "%MA%";
 SELECT * FROM empleados WHERE nombre LIKE "%l%";
 
 --eliminar tablas--
-drop table paquete;
+drop table estado;
