@@ -13,30 +13,15 @@
   <body>
     <header>
         <nav>
-            <div class="nav-wrapper white ">
-              <a href="#" class="brand-logo black-text">Logo</a>
-              <ul id="nav-mobile" class="right hide-on-med-and-down">
-                <li><a href="#" class="black-text">Log in</a></li>
-                <button class="btn waves-effect waves-light green lighten-1 radius " type="submit" name="action">Singn Up</button>
-                    <i class="material-icons right"></i>
-                </button>
-              </ul>
+            <div class="nav-wrapper cyan ">
+              <a href="index.php" class="brand-logo black-text center ">Logo</a>
             </div>
         </nav>     
     </header>
 
-    <div>
-        <img width="100%" src="./Img/pexels-pixabay-269077.jpg">
-        <br>
-        <br>
-    </div>
-
-
-
-
-
-
+  
     <!--JavaScript at end of body for optimized loading-->
     <script type="text/javascript" src="./materialize/materialize/js/materialize.min.js"></script>
+  
   </body>
 </html>
