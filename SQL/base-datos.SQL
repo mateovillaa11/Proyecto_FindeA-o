@@ -43,16 +43,17 @@ CREATE TABLE envios (
 );
 
 SELECT * FROM envios;
+drop table envios;
 
 --
 INSERT envios(CI_cliente,destinatario, id_departamentos,calle, puerta, FechaRecibido,id_estado)  
 	VALUES ("11411115","Mateo","1","18 de julio","4119","2022-11-20","2");
  INSERT envios(CI_cliente,destinatario, id_departamentos,calle, puerta, FechaRecibido,id_estado)
-	VALUES ("61611414","Agustin","1","General Hornos","2131","2022-10-21","3");
+	VALUES ("61611414","Agustin","1","General Hornos","211","2022-10-21","3");
 INSERT envios(CI_cliente,destinatario, id_departamentos,calle, puerta, FechaRecibido,id_estado)
-	VALUES ("41115113","Marcos","2","Avenida Canelones","2131","2022-11-23","1");
+	VALUES ("41115113","Marcos","2","Avenida Canelones","241","2022-11-23","1");
 INSERT envios(CI_cliente,destinatario, id_departamentos,calle, puerta, FechaRecibido,id_estado)  
-	VALUES ("35411432","Rodrigo","4","Avenida Maldonado","2131","2022-11-22","2");
+	VALUES ("35411432","Rodrigo","4","Avenida Maldonado","21","2022-11-22","2");
 --FIN--
 
 --Departamento--
@@ -157,8 +158,6 @@ SELECT * FROM cargo;
 --FIN
 
 
-
-
 --Nombres Empleados--
 SELECT nombre FROM empleados;
 
@@ -168,13 +167,53 @@ SELECT nombre FROM clientes;
 --Nombre Clientes--
 SELECT apellido FROM clientes; 
 
---Buscar cosas en tabla clienetes--
-SELECT * FROM clientes WHERE nombre LIKE "%MA%";
+--Buscar cosas en tabla clientes--
+SELECT * FROM cliente WHERE nombre LIKE "%a%";
+
+SELECT nombre FROM cliente;
+
+select CI from cliente;
+
+SELECT count(*) FROM cliente;
+--
+
+
+--envios--
+SELECT * FROM envios WHERE destinatario LIKE "%ag%";
+
+SELECT * FROM envios WHERE destinatario LIKE "%ma%";
+
+SELECT CI_cliente,destinatario FROM envios;
+
+SELECT count(*) FROM envios;
+--
 
 --Buscar cosas en tabla empleados--
 SELECT * FROM empleados WHERE nombre LIKE "%l%";
+--
 
 --eliminar tablas--
 drop table estado;
 drop table envios;
 drop table funcionarios;
+
+--ESTADO--
+select * from envios
+	inner join estado on estado.id = envios.id_estado;
+
+select * from envios
+	inner join estado on estado.id = envios.id_estado;
+
+--DEPARTAMENTOS--
+select * from envios
+	inner join departamentos on departamentos.id = envios.id_departamentos;
+
+select * from envios
+	left join departamentos on departamentos.id = envios.id_departamentos;
+
+--CLIENTES--
+select * from envios
+	inner join cliente on cliente.CI = envios.CI_cliente;
+
+select * from envios
+	LEFT join cliente on cliente.CI = envios.CI_cliente;
