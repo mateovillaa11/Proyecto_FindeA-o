@@ -1,13 +1,13 @@
 <?php
 	$ruta 	= isset($_GET['r'])?$_GET['r']:"";
 	$accion = isset($_GET['a'])?$_GET['a']:"";
-	$IdEnvio= isset($_GET['CI'])?$_GET['CI']:"";
+	$CICliente= isset($_GET['CI'])?$_GET['CI']:"";
 	$pagina =isset($_GET['pagina'])?$_GET['pagina']:"1";
 	$busqueda =isset($_GET['busqueda'])?$_GET['busqueda']:"";
 
-	require_once("./modelos/envios.php");
+	require_once("./modelos/clientes.php");
 
-	$objEnvio = new envios();
+	$objClientes = new cliente();
 
 		
 
@@ -15,15 +15,15 @@
 
 			$arrayDatos	= $_POST;
 
-			$objEnvio->constructor($arrayDatos);
+			$objClientes->constructor($arrayDatos);
 
-			$respuesta = $objEnvio->ingresarEnvios();
+			$respuesta = $objClientes->ingresarCliente();
 
 		}
 
-		if($accion == "editar" && $IdEnvio != ""){
+		if($accion == "editar" && $CICliente != ""){
 
-			$objEnvio->cargarEnvios($IdEnvio);
+			$objClientes->cargarCliente($CICliente);
 
 		}
 
@@ -31,17 +31,17 @@
 
 			$arrayDatos	= $_POST;
 
-			$objEnvio->constructor($arrayDatos);
+			$objClientes->constructor($arrayDatos);
 
-			$respuesta = $objEnvio->editarEnvios();
+			$respuesta = $objClientes->editarCliente();
 
 
 		}
 
 
-		if($accion == "borrar" && $IdEnvio != ""){
+		if($accion == "borrar" && $CICliente != ""){
 
-			$objEnvio->cargarEnvios($IdEnvio);
+			$objClientes->cargarCliente($CICliente);
 
 		}
 
@@ -49,18 +49,18 @@
 
 			$arrayDatos	= $_POST;
 
-			$objEnvio->constructor($arrayDatos);
+			$objClientes->constructor($arrayDatos);
 
-			$respuesta = $objEnvio->borrarEnvios();
+			$respuesta = $objClientes->borrarCliente();
 
 		}
 
 
-	$filtros = array("totalRegistros"=>3, "busqueda" => $busqueda);
+	$filtros = array("totalRegistros"=>4, "busqueda" => $busqueda);
 
-	$totalEnvios = $objEnvio->totalEnvios($filtros);
+	$totalClientes = $objClientes->totalClientes($filtros);
 
-	$totalPaginas = ceil($totalEnvios / $filtros['totalRegistros']);
+	$totalPaginas = ceil($totalClientes / $filtros['totalRegistros']);
 
 	if($pagina > $totalPaginas){
 
@@ -89,68 +89,50 @@
 
 	$filtros['pagina']= $pagina ;
 
-	$listaEnvios = $objEnvio->listarEnvios($filtros);
+	$listaClientes = $objClientes->listarClientes($filtros);
 
 ?>
 
 
 	<div>
-		<h1 class="center"><a href="index.php?r=<?=$ruta?>" class="black-text">Envios</a></h1>
+		<h1 class="center"><a href="index.php?r=<?=$ruta?>" class="black-text">Clientes</a></h1>
 
 <?php
 
-	if($accion == "editar" && $IdEnvio != ""){
+	if($accion == "editar" && $CICliente != ""){
 ?>
 			<div class="card">
 				<div class="card-content">
-					<form action="index.php?r=<?=$ruta?>" method="POST" class="col s6">
+					<form action="index.php?r=<?=$ruta?>" method="POST" class="col s12">
 						<div>
-							<h4>Editar Envio</h4>
+							<h4>Editar Cliente</h4>
 						</div>
 						<div class="row">
 							<div class="input-field col s12">
-								<input id="CI" type="number" class="validate" name="CI" value="<?=$objEnvio->traerCiCliente()?>">
+								<input id="CI" type="number" class="validate" name="CI" value="<?=$objClientes->traerDocumento()?>">
 								<label for="CI">CI</label>
 							</div>
 						</div>
 						<div class="row">
 							<div class="input-field col s6">
-								<input id="nombre" type="text" class="validate" name="nombre" value="<?=$objEnvio->traerDestinatario()?>" >
-								<label for="nombre">destinatario</label>
+								<input id="nombre" type="text" class="validate" name="nombre" value="<?=$objClientes->traerNombre()?>" >
+								<label for="nombre">Nombre</label>
 							</div>
 							<div class="input-field col s6">
-								<input id="Departamentos" type="text" class="validate" name="Departamentos" value="<?=$objEnvio->traerId_departamentos()?>">
-								<label for="Departamentos">Departamentos</label>
+								<input id="apellido" type="text" class="validate" name="apellido" value="<?=$objClientes->traerApellido()?>">
+								<label for="apellido">Apellido</label>
 							</div>
 						</div>
 						
 						<div class="row">
 							<div class="input-field col s12">
-								<input id="calle" type="text" class="validate" name="calle" value="<?=$objEnvio->traerCalle()?>">
-								<label for="calle">Calle</label>
-							</div>
-						</div>
-						<div class="row">
-							<div class="input-field col s12">
-								<input id="puerta" type="text" class="validate" name="puerta" value="<?=$objEnvio->traerPuerta()?>">
-								<label for="puerta">Puerta</label>
-							</div>
-						</div>
-						<div class="row">
-							<div class="input-field col s12">
-								<input id="fecha" type="date" class="validate" name="fecha" value="<?=$objEnvio->traerFechaRecibido()?>">
-								<label for="fecha">Fecha Recibido</label>
-							</div>
-						</div>
-						<div class="row">
-							<div class="input-field col s12">
-								<input id="estado" type="text" class="validate" name="estado" value="<?=$objEnvio->traerIdEstado()?>">
-								<label for="estado">Estado Paquete</label>
+								<input id="telefono" type="number" class="validate" name="telefono" value="<?=$objClientes->traerTelefono()?>">
+								<label for="telefono">telefono</label>
 							</div>
 						</div>
 
 						<div class="row">
-							<input  type="hidden" name="id" value="<?=$objClientes->traerIdEnvio()?>">
+							<input  type="hidden" name="CI" value="<?=$objClientes->traerDocumento()?>">
 							
 							<button class="btn waves-effect waves-light right cyan" type="submit" name="action-guardar" value="editar">Guardar
 								<i class="material-icons right">save</i>
@@ -167,7 +149,7 @@
 
 
 <?php
-	if($accion == "borrar" && $IdEnvio != ""){
+	if($accion == "borrar" && $CICliente != ""){
 
 ?>
 			<div class="card">
@@ -178,12 +160,12 @@
 						</div>
 						<div class="row">
 							<div class="input-field col s12">
-								<h3>Estas seguro que quieres cancelar el envio para <?=$objEnvio->traerDestinatario()?></h3>
+								<h3>Estas seguro que quieres borrar al cliente <?=$objClientes->traerNombre()?></h3>
 							</div>
 						</div>
 
 						<div class="row">
-							<input  type="hidden" name="id" value="<?=$objEnvio->traerIdEnvio()?>">
+							<input  type="hidden" name="CI" value="<?=$objClientes->traerDocumento()?>">
 							<div class="input-field col s2">
 								<button class="btn waves-effect waves-light right red" type="submit" name="action-borrar" value="borrar">Borrar
 									<i class="material-icons right">delete</i>
@@ -246,39 +228,24 @@
 					<div class="row">
 							<div class="input-field col s12">
 								<input id="CI" type="number" class="validate" name="CI">
-								<label for="CI">Documento Cliente</label>
+								<label for="CI">CI</label>
 							</div>
 					</div>
 					<div class="row">
 						<div class="input-field col s6">
 							<input id="nombre" type="text" class="validate" name="nombre">
-							<label for="nombre">Nombre Destinatario</label>
+							<label for="nombre">Nombre</label>
 						</div>
 						<div class="input-field col s6">
-							<input id="Departamento" type="text" class="validate" name="Departamento">
-							<label for="departamento">Departamento</label>
+							<input id="apellido" type="text" class="validate" name="apellido">
+							<label for="apellido">Apellido</label>
 						</div>
 					</div>
 					<div class="row">
-						<div class="input-field col s3">
-							<input id="calle" type="text" class="validate" name="calle">
-							<label for="calle">Calle</label>
+						<div class="input-field col s12">
+							<input id="telefono" type="number" class="validate" name="telefono">
+							<label for="telefono">telefono</label>
 						</div>
-						<div class="input-field col s3">
-							<input id="puerta" type="number" class="validate" name="puerta">
-							<label for="puerta">puerta</label>
-						</div>
-						<div class="input-field col s3">
-							<input id="fecha" type="date" class="validate" name="fecha">
-							<label for="fecha">Fecha Recibido</label>
-						</div>
-					</div>
-					<div class="row">
-						<div class="input-field col s3">
-							<input id="Estado" type="text" class="validate" name="Estado">
-							<label for="Estado">Estado Del Paquete</label>
-						</div>
-
 						<button class="btn waves-effect waves-light right cyan" type="submit" name="action" value="ingresar">ingresar
 							<i class="material-icons right">save</i>
 						</button>
@@ -296,7 +263,7 @@
 	<table class="responsive-table highlight centered">
         <thead>
 			
-			<div class="nav-wrapper col s3">
+			<div class="nav-wrapper col s6">
 				<form action="index.php?" method="GET">
 					<div class="input-field ">
 						<input type="hidden" name="r" value="<?=$ruta?>">
@@ -310,13 +277,10 @@
 			</div>
 
 		    <tr class="cyan white-text">
-              <th>Documento Cliente</th>
-              <th>Nombre Destinatario</th>
-              <th>Departamento</th>
-			  <th>Calle</th>
-			  <th>Numero puerta</th>
-			  <th>Fecha Recibido</th>
-			  <th>Estado</th>
+              <th>Documento</th>
+              <th>Nombre</th>
+              <th>Apellido</th>
+			  <th>Teléfono</th>
 			  <th></th>
             </tr>
         </thead>
@@ -324,23 +288,20 @@
         <tbody>
 
 <?php
-	foreach($listaEnvios as $envios){
+	foreach($listaClientes as $cliente){
 
 ?>
 			<tr>
-			  	<td><?=$envios['CI_clientes']?></td>
-				<td><?=$envios['destinatario']?></td>
-				<td><?=$envios['departamento']?></td>
-				<td><?=$envios['calle']?></td>
-				<td><?=$envios['puerta']?></td>
-				<td><?=$envios['fechaRecibido']?></td>
-				<td><?=$envios['id_estado']?></td>
+			  	<td><?=$cliente['CI']?></td>
+				<td><?=$cliente['nombre']?></td>
+				<td><?=$cliente['apellido']?></td>
+				<td><?=$cliente['telefono']?></td>
 				<td>
 					<div class="right-aling">
-                        <a href="index.php?r=<?=$ruta?>&a=editar&CI=<?=$envios['id']?>" class="waves-effect cyan btn-floating">
+                        <a href="index.php?r=<?=$ruta?>&a=editar&CI=<?=$cliente['CI']?>" class="waves-effect cyan btn-floating">
 							<i class="material-icons left">edit</i>
 						</a>
-                        <a href="index.php?r=<?=$ruta?>&a=borrar&CI=<?=$envios['id']?>" class="waves-effect red btn-floating">
+                        <a href="index.php?r=<?=$ruta?>&a=borrar&CI=<?=$cliente['CI']?>" class="waves-effect red btn-floating">
 							<i class="material-icons left">delete</i>
 						</a>
                     </div>
