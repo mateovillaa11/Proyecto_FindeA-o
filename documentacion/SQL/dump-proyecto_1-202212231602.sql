@@ -51,6 +51,7 @@ CREATE TABLE `cliente` (
   `nombre` varchar(50) NOT NULL,
   `apellido` varchar(50) NOT NULL,
   `telefono` varchar(50) NOT NULL,
+  `estado` tinyint(3) DEFAULT NULL,
   PRIMARY KEY (`CI`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -61,7 +62,7 @@ CREATE TABLE `cliente` (
 
 LOCK TABLES `cliente` WRITE;
 /*!40000 ALTER TABLE `cliente` DISABLE KEYS */;
-INSERT INTO `cliente` VALUES (11411115,'Iryna','Alvarado','093123223'),(35411432,'Angela','Maria Roig','094123325'),(41115113,'Svetlana','Puente','093123211'),(61611414,'Guillem','Mansilla','093123122');
+INSERT INTO `cliente` VALUES (1,'Julian','Alvarez','1',0),(777,'cristiano','ronaldo','800',0),(5432210,'Esteba','Ruiz','094123324',1),(11124906,'Gemma','Frances','098517202',1),(11411115,'Iryna','Alvarado','093123223',1),(12821916,'Omar','Fernandez','09463281',1),(21947350,'Carlos ','Talavera','096623291',1),(25554442,'Matias','Olivera','094133325',1),(27735979,'Mirian','Sanz','092222999',1),(35411432,'Angela','Maria Roig','094123325',1),(37725881,'Anibal','Moreno','097511476',1),(41115113,'Svetlana','Puente','093123211',1),(42221436,'Raul','Roman','094123725',1),(42627848,'Aida','Jaime','091851720',1),(61611414,'Guillem','Mansilla','093123122',1);
 /*!40000 ALTER TABLE `cliente` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -85,7 +86,7 @@ CREATE TABLE `departamentos` (
 
 LOCK TABLES `departamentos` WRITE;
 /*!40000 ALTER TABLE `departamentos` DISABLE KEYS */;
-INSERT INTO `departamentos` VALUES (1,'Montevideo'),(2,'canelones'),(3,'San José'),(4,'Maldonado'),(5,'Rocha'),(6,'Colonia'),(7,'Lavalleja'),(8,'Florida'),(9,'Flores'),(10,'Soriano'),(11,'Río Negro'),(12,'Durazno'),(13,'Treinta y Tres'),(14,'Cerro Largo'),(15,'Paysandú'),(16,'Tacuarembó'),(17,'Rivera'),(18,'Salto'),(19,'Artigas');
+INSERT INTO `departamentos` VALUES (1,'Montevideo'),(2,'canelones'),(3,'San Jose'),(4,'Maldonado'),(5,'Rocha'),(6,'Colonia'),(7,'Lavalleja'),(8,'Florida'),(9,'Flores'),(10,'Soriano'),(11,'Rio Negro'),(12,'Durazno'),(13,'Treinta y Tres'),(14,'Cerro Largo'),(15,'Paysandu'),(16,'Tacuarembo'),(17,'Rivera'),(18,'Salto'),(19,'Artigas');
 /*!40000 ALTER TABLE `departamentos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -105,6 +106,7 @@ CREATE TABLE `envios` (
   `puerta` int(50) NOT NULL,
   `FechaRecibido` date NOT NULL,
   `id_estado` int(3) NOT NULL,
+  `estado` tinyint(3) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `id_estado` (`id_estado`),
   KEY `CI_cliente` (`CI_cliente`),
@@ -112,7 +114,7 @@ CREATE TABLE `envios` (
   CONSTRAINT `fk_CI_cliente_CI` FOREIGN KEY (`CI_cliente`) REFERENCES `cliente` (`CI`),
   CONSTRAINT `fk_id_departamentos_id` FOREIGN KEY (`id_departamentos`) REFERENCES `departamentos` (`id`),
   CONSTRAINT `fk_id_estado_id` FOREIGN KEY (`id_estado`) REFERENCES `estado` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -121,7 +123,7 @@ CREATE TABLE `envios` (
 
 LOCK TABLES `envios` WRITE;
 /*!40000 ALTER TABLE `envios` DISABLE KEYS */;
-INSERT INTO `envios` VALUES (1,11411115,'Mateo',1,'18 de julio',4119,'2022-11-20',2),(2,61611414,'Agustin',1,'General Hornos',211,'2022-10-21',3),(3,41115113,'Marcos',2,'Avenida Canelones',241,'2022-11-23',1),(4,35411432,'Rodrigo',4,'Avenida Maldonado',21,'2022-11-22',2),(5,11411115,'Mateo',1,'18 de julio',4119,'2022-11-25',1);
+INSERT INTO `envios` VALUES (1,11411115,'Mateo',1,'18 de julio',4119,'2022-11-20',2,0),(2,5432210,'Agustin',1,'General Hornos',211,'2022-10-21',3,1),(3,5432210,'Marcos',2,'Canelones',241,'2022-11-23',3,1),(4,35411432,'Rodrigo',4,'Maldonado',21,'2022-11-22',2,1),(5,11411115,'Mateo',1,'18 de julio',4119,'2022-11-25',2,1),(6,11124906,'Santiago',1,'11',12,'2022-12-19',1,0),(7,12821916,'Messi',1,'1',212,'2022-12-20',1,0),(8,42627848,'Cristiano ',3,'2',3,'2022-12-21',2,0),(9,27735979,'Diego',1,'18 de julio',4321,'2022-12-20',1,1),(10,12821916,'Roman',5,'avenida treinta y tres',33,'2022-12-22',1,0),(11,42221436,'Jose Luis',15,'paysandu',888,'2022-12-22',1,1);
 /*!40000 ALTER TABLE `envios` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -163,6 +165,7 @@ CREATE TABLE `funcionarios` (
   `telefono` varchar(50) NOT NULL,
   `correo` varchar(50) NOT NULL,
   `id_cargo` int(3) NOT NULL,
+  `estado` tinyint(3) DEFAULT NULL,
   PRIMARY KEY (`ci`),
   KEY `id_cargo` (`id_cargo`),
   CONSTRAINT `fk_id_cargo_id` FOREIGN KEY (`id_cargo`) REFERENCES `cargo` (`id`)
@@ -175,8 +178,36 @@ CREATE TABLE `funcionarios` (
 
 LOCK TABLES `funcionarios` WRITE;
 /*!40000 ALTER TABLE `funcionarios` DISABLE KEYS */;
-INSERT INTO `funcionarios` VALUES (2121343,'Marisa','Da Luz','093723892','Marisa@gmail.com',2),(12221112,'Guillermo','Mendez','092453223','Guille@gmail.com',3),(32221112,'Valeria','Rodriguez','095124323','Vale@gmail.com',1),(44565432,'Laura','Fuentes','091623271','Laura@gmail.com',2);
+INSERT INTO `funcionarios` VALUES (2,'juan','lopez','2','d10s@gmail.com',3,0),(2121343,'Marisa','Da Luz','093723892','Marisa@gmail.com',3,1),(12221112,'Guillermo','Mendez','092453223','Guille@gmail.com',3,1),(32221112,'Valeria','Rodriguez','095124323','Vale@gmail.com',1,1),(43322216,'Esteban','Lopez','096555789','EstabanElrey@gmail.com',3,1),(44565432,'Laura','Fuentes','091623271','Laura@gmail.com',2,1);
 /*!40000 ALTER TABLE `funcionarios` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `usuarios`
+--
+
+DROP TABLE IF EXISTS `usuarios`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `usuarios` (
+  `id` int(5) NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(50) DEFAULT NULL,
+  `mail` varchar(100) DEFAULT NULL,
+  `clave` varchar(100) DEFAULT NULL,
+  `rol` varchar(100) NOT NULL,
+  `estado` int(1) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `usuarios`
+--
+
+LOCK TABLES `usuarios` WRITE;
+/*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
+INSERT INTO `usuarios` VALUES (1,'admin','AdminEmpresa1@gmail.com','21232f297a57a5a743894a0e4a801fc3','administrador',1),(2,'encargado','encargados@gmail.com','cb0d0277094bffbf04eceb3a6091cfaa','encargado',1),(3,'recepcionista','recepcionista@gmail.com','6e1a5113640fa25ca9d466fa128f367a','recepcionista',1),(4,'repartidor','repartidor@gmail.com','c0036674228ee9d9a7e60a44b6c58544','repartidor',1);
+/*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -192,4 +223,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-12-06 14:24:56
+-- Dump completed on 2022-12-23 16:02:45

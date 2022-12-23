@@ -7,9 +7,10 @@ Por el momento cuenta solo con ese usuario.
 
 Version 1.0.0 (22/12/2022 22:24)
 
+version 1.0.1(23/12/2022 16:00) se agrego usuarios,
+
 
 //Notas para futuro//
 Agregar vista para clientes,En esta el cliente podra ver el estado de su paquete.
-Agregar los roles de los respectivos usuarios. Los usarios no podran observar todas las vistas.
 Intentar mejorar lo visual del programa.
 Al entregar un paquete que se borre de la lista de envios.
