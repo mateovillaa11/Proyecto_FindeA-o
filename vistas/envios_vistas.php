@@ -6,8 +6,14 @@
 	$busqueda =isset($_GET['busqueda'])?$_GET['busqueda']:"";
 
 	require_once("./modelos/envios.php");
+	require_once("./modelos/clientes.php");
+	require_once("./modelos/departamentos.php");
+	require_once("./modelos/estado.php");
 
 	$objEnvio = new envios();
+	$objCliente = new cliente();
+	$objDepartamentos = new departamentos();
+	$objEstado = new estado();
 
 		
 
@@ -90,6 +96,9 @@
 	$filtros['pagina']= $pagina ;
 
 	$listaEnvios = $objEnvio->listarEnvios($filtros);
+	$listaCliente = $objCliente->listarSelect($filtros);
+	$listaDepartamentos = $objDepartamentos->listarSelect($filtros);
+	$listaEstado = $objEstado->listarSelect($filtros);
 
 ?>
 
@@ -103,54 +112,94 @@
 ?>
 			<div class="card">
 				<div class="card-content">
-					<form action="index.php?r=<?=$ruta?>" method="POST" class="col s6">
+					<form action="index.php?r=<?=$ruta?>" method="POST" class="col s12">
 						<div>
 							<h4>Editar Envio</h4>
 						</div>
+						<br></br>
+						<div class="input-field col s12">
+    						<select name="CI_cliente">
+      							<option value="" disabled selected>Documento Cliente</option>
+      							
+<?php
+	foreach($listaCliente as $cliente){
+?>
+								<option value="<?=$cliente['CI']?>" <?php if($cliente ['CI'] == $objEnvio->traerCiCliente()){echo("selected");} ?> ><?=$cliente['nombre']?></option>
+
+
+
+<?php
+	}
+?>
+
+    						</select>
+    							<label>Docuemnto del Cliente</label>
+					</div>
 						<div class="row">
 							<div class="input-field col s12">
-								<input id="CI" type="number" class="validate" name="CI" value="<?=$objEnvio->traerCiCliente()?>">
-								<label for="CI">CI</label>
+								<input id="destinatario" type="text" autocomplete="off" class="validate" name="destinatario" value="<?=$objEnvio->traerDestinatario()?>">
+								<label for="destinatario">destinatario</label>
 							</div>
 						</div>
 						<div class="row">
+						<div class="input-field col s6">
+    						<select name="id_departamentos">
+      							<option value="" disabled selected>Departamentos</option>
+      							
+<?php
+	foreach($listaDepartamentos as $departamento){
+?>
+								<option value="<?=$departamento['id']?>" <?php if($departamento ['id'] == $objEnvio->traerId_departamentos()){echo("selected");} ?>><?=$departamento['nombre']?></option>
+
+
+
+<?php
+	}
+?>
+
+    						</select>
+    							<label>Envio a</label>
+					</div>
 							<div class="input-field col s6">
-								<input id="nombre" type="text" class="validate" name="nombre" value="<?=$objEnvio->traerDestinatario()?>" >
-								<label for="nombre">destinatario</label>
-							</div>
-							<div class="input-field col s6">
-								<input id="Departamentos" type="text" class="validate" name="Departamentos" value="<?=$objEnvio->traerId_departamentos()?>">
-								<label for="Departamentos">Departamentos</label>
+								<input id="calle" type="text" autocomplete="off" class="validate" name="calle" value="<?=$objEnvio->traerCalle()?>">
+								<label for="calle">Calle</label>
 							</div>
 						</div>
 						
 						<div class="row">
 							<div class="input-field col s12">
-								<input id="calle" type="text" class="validate" name="calle" value="<?=$objEnvio->traerCalle()?>">
-								<label for="calle">Calle</label>
+								<input id="puerta" type="number" autocomplete="off" class="validate" name="puerta" value="<?=$objEnvio->traerPuerta()?>">
+								<label for="puerta">puerta</label>
 							</div>
 						</div>
 						<div class="row">
-							<div class="input-field col s12">
-								<input id="puerta" type="text" class="validate" name="puerta" value="<?=$objEnvio->traerPuerta()?>">
-								<label for="puerta">Puerta</label>
+							<div class="input-field col s6">
+								<input id="FechaRecibido" type="date" autocomplete="off" class="validate" name="FechaRecibido" value="<?=$objEnvio->traerFechaRecibido()?>">
+								<label for="FechaRecibido">Fecha Recibido</label>
 							</div>
-						</div>
-						<div class="row">
-							<div class="input-field col s12">
-								<input id="fecha" type="date" class="validate" name="fecha" value="<?=$objEnvio->traerFechaRecibido()?>">
-								<label for="fecha">Fecha Recibido</label>
-							</div>
-						</div>
-						<div class="row">
-							<div class="input-field col s12">
-								<input id="estado" type="text" class="validate" name="estado" value="<?=$objEnvio->traerIdEstado()?>">
-								<label for="estado">Estado Paquete</label>
+						
+							<div class="input-field col s6">
+    						<select name="id_estado">
+      							<option value="" disabled selected>Estado Paquete</option>
+      							
+<?php
+	foreach($listaEstado as $estado){
+?>
+								<option value="<?=$estado['id']?>" <?php if($estado ['id'] == $objEnvio->traerIdEstado()){echo("selected");} ?> ><?=$estado['nombre']?></option>
+
+
+
+<?php
+	}
+?>
+
+    						</select>
+    							<label>Estado</label>
 							</div>
 						</div>
 
 						<div class="row">
-							<input  type="hidden" name="id" value="<?=$objClientes->traerIdEnvio()?>">
+							<input  type="hidden" name="id" value="<?=$objEnvio->traerIdEnvio()?>">
 							
 							<button class="btn waves-effect waves-light right cyan" type="submit" name="action-guardar" value="editar">Guardar
 								<i class="material-icons right">save</i>
@@ -174,7 +223,7 @@
 				<div class="card-content">
 					<form action="index.php?r=<?=$ruta?>" method="POST" class="col s12">
 						<div class="center">
-							<h4>borrar Cliente</h4>
+							<h4>borrar Envio</h4>
 						</div>
 						<div class="row">
 							<div class="input-field col s12">
@@ -226,7 +275,7 @@
 ?>
 
 		<div class="row">
-			<a class="btn-small btn-large waves-effect waves-light cyan modal-trigger right-aling" href="#modal1">Ingresar Clientes</a>
+			<a class="btn-small btn-large waves-effect waves-light cyan modal-trigger right-aling" href="#modal1">Añadir Envio</a>
 
 		</div>
 		
@@ -235,7 +284,7 @@
 		<div id="modal1" class="modal">
 			<div class="center">
 				<h4>
-					Ingresar Cliente
+					Ingresar Envio
 				</h4>
 			</div>
 
@@ -243,46 +292,86 @@
 			<div class="modal-content">
 				<form action="index.php?r=<?=$ruta?>" method="POST" class="col s12">
 
-					<div class="row">
-							<div class="input-field col s12">
-								<input id="CI" type="number" class="validate" name="CI">
-								<label for="CI">Documento Cliente</label>
-							</div>
+					<div class="input-field col s12">
+    						<select name="CI_cliente">
+      							<option value="" disabled selected>Clientes</option>
+      							
+<?php
+	foreach($listaCliente as $cliente){
+?>
+								<option value="<?=$cliente['CI']?>"><?=$cliente['nombre']?></option>
+
+
+
+<?php
+	}
+?>
+
+    						</select>
+    							<label>Docuemnto del Cliente</label>
 					</div>
 					<div class="row">
 						<div class="input-field col s6">
-							<input id="nombre" type="text" class="validate" name="nombre">
-							<label for="nombre">Nombre Destinatario</label>
+							<input id="destinatario" type="text" class="validate" name="destinatario" autocomplete="off">
+							<label for="destinatario">Nombre Destinatario</label>
 						</div>
 						<div class="input-field col s6">
-							<input id="Departamento" type="text" class="validate" name="Departamento">
-							<label for="departamento">Departamento</label>
-						</div>
+    						<select name="id_departamentos">
+      							<option value="" disabled selected>Departamento</option>
+      							
+<?php
+	foreach($listaDepartamentos as $departamento){
+?>
+								<option value="<?=$departamento['id']?>"><?=$departamento['nombre']?></option>
+
+
+
+<?php
+	}
+?>
+
+    						</select>
+    							<label>Envio a</label>
+					</div>
 					</div>
 					<div class="row">
 						<div class="input-field col s3">
-							<input id="calle" type="text" class="validate" name="calle">
+							<input id="calle" type="text" class="validate" name="calle" autocomplete="off">
 							<label for="calle">Calle</label>
 						</div>
 						<div class="input-field col s3">
-							<input id="puerta" type="number" class="validate" name="puerta">
+							<input id="puerta" type="number" class="validate" name="puerta" autocomplete="off">
 							<label for="puerta">puerta</label>
 						</div>
 						<div class="input-field col s3">
-							<input id="fecha" type="date" class="validate" name="fecha">
-							<label for="fecha">Fecha Recibido</label>
+							<input id="FechaRecibido" type="date" class="validate" name="FechaRecibido">
+							<label for="FechaRecibido">Fecha Recibido</label>
 						</div>
 					</div>
-					<div class="row">
-						<div class="input-field col s3">
-							<input id="Estado" type="text" class="validate" name="Estado">
-							<label for="Estado">Estado Del Paquete</label>
-						</div>
+					<div class="input-field col s6">
+    						<select name="id_estado">
+      							<option value="" disabled selected>Estado De Paquete</option>
+      							
+<?php
+	foreach($listaEstado as $estado){
+?>
+								<option value="<?=$estado['id']?>"><?=$estado['nombre']?></option>
 
-						<button class="btn waves-effect waves-light right cyan" type="submit" name="action" value="ingresar">ingresar
-							<i class="material-icons right">save</i>
-						</button>
+
+
+<?php
+	}
+?>
+
+    						</select>
+    							<label>Estado</label>
+						<div class="col s6">
+							<button class="btn waves-effect waves-light right cyan" type="submit" name="action" value="ingresar">ingresar
+								<i class="material-icons right">save</i>
+							</button>
+						</div>
 					</div>
+					
     			</form>	
 			</div>
 		</div>
@@ -300,7 +389,7 @@
 				<form action="index.php?" method="GET">
 					<div class="input-field ">
 						<input type="hidden" name="r" value="<?=$ruta?>">
-						<input id="search" type="search" name="busqueda" required>
+						<input id="search" type="search" name="busqueda" required autocomplete="off">
 						<label class="label-icon" for="search">
 							<i class="material-icons">search</i>
 						</label>
@@ -317,7 +406,7 @@
 			  <th>Numero puerta</th>
 			  <th>Fecha Recibido</th>
 			  <th>Estado</th>
-			  <th></th>
+			  <th>Acciones</th>
             </tr>
         </thead>
 
@@ -328,18 +417,19 @@
 
 ?>
 			<tr>
-			  	<td><?=$envios['CI_clientes']?></td>
+			  	<td><?=$envios['CI_cliente']?></td>
 				<td><?=$envios['destinatario']?></td>
-				<td><?=$envios['departamento']?></td>
+				<td><?=$envios['departamentos']?></td>
 				<td><?=$envios['calle']?></td>
 				<td><?=$envios['puerta']?></td>
-				<td><?=$envios['fechaRecibido']?></td>
-				<td><?=$envios['id_estado']?></td>
+				<td><?=$envios['FechaRecibido']?></td>
+				<td><?=$envios['EstadoPaquete']?></td>
 				<td>
 					<div class="right-aling">
                         <a href="index.php?r=<?=$ruta?>&a=editar&CI=<?=$envios['id']?>" class="waves-effect cyan btn-floating">
 							<i class="material-icons left">edit</i>
 						</a>
+						
                         <a href="index.php?r=<?=$ruta?>&a=borrar&CI=<?=$envios['id']?>" class="waves-effect red btn-floating">
 							<i class="material-icons left">delete</i>
 						</a>

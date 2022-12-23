@@ -109,24 +109,24 @@
 						</div>
 						<div class="row">
 							<div class="input-field col s12">
-								<input id="CI" type="number" class="validate" name="CI" value="<?=$objClientes->traerDocumento()?>">
+								<input id="CI" type="number" autocomplete="off" class="validate" name="CI" value="<?=$objClientes->traerDocumento()?>">
 								<label for="CI">CI</label>
 							</div>
 						</div>
 						<div class="row">
 							<div class="input-field col s6">
-								<input id="nombre" type="text" class="validate" name="nombre" value="<?=$objClientes->traerNombre()?>" >
+								<input id="nombre" type="text" autocomplete="off" class="validate" name="nombre" value="<?=$objClientes->traerNombre()?>" >
 								<label for="nombre">Nombre</label>
 							</div>
 							<div class="input-field col s6">
-								<input id="apellido" type="text" class="validate" name="apellido" value="<?=$objClientes->traerApellido()?>">
+								<input id="apellido" type="text" autocomplete="off" class="validate" name="apellido" value="<?=$objClientes->traerApellido()?>">
 								<label for="apellido">Apellido</label>
 							</div>
 						</div>
 						
 						<div class="row">
 							<div class="input-field col s12">
-								<input id="telefono" type="number" class="validate" name="telefono" value="<?=$objClientes->traerTelefono()?>">
+								<input id="telefono" type="number" autocomplete="off" class="validate" name="telefono" value="<?=$objClientes->traerTelefono()?>">
 								<label for="telefono">telefono</label>
 							</div>
 						</div>
@@ -227,23 +227,23 @@
 
 					<div class="row">
 							<div class="input-field col s12">
-								<input id="CI" type="number" class="validate" name="CI">
+								<input id="CI" type="number" autocomplete="off" class="validate" name="CI">
 								<label for="CI">CI</label>
 							</div>
 					</div>
 					<div class="row">
 						<div class="input-field col s6">
-							<input id="nombre" type="text" class="validate" name="nombre">
+							<input id="nombre" autocomplete="off" type="text" class="validate" name="nombre">
 							<label for="nombre">Nombre</label>
 						</div>
 						<div class="input-field col s6">
-							<input id="apellido" type="text" class="validate" name="apellido">
+							<input id="apellido" autocomplete="off" type="text" class="validate" name="apellido">
 							<label for="apellido">Apellido</label>
 						</div>
 					</div>
 					<div class="row">
 						<div class="input-field col s12">
-							<input id="telefono" type="number" class="validate" name="telefono">
+							<input id="telefono" autocomplete="off" type="number" class="validate" name="telefono">
 							<label for="telefono">telefono</label>
 						</div>
 						<button class="btn waves-effect waves-light right cyan" type="submit" name="action" value="ingresar">ingresar
@@ -267,9 +267,9 @@
 				<form action="index.php?" method="GET">
 					<div class="input-field ">
 						<input type="hidden" name="r" value="<?=$ruta?>">
-						<input id="search" type="search" name="busqueda" required>
+						<input id="search" type="search" name="busqueda" required autocomplete="off">
 						<label class="label-icon" for="search">
-							<i class="material-icons">search</i>
+							<i class="material-icons cyan-text">search</i>
 						</label>
 						<i class="material-icons">close</i>
 					</div>

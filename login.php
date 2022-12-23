@@ -1,14 +1,14 @@
 <?php
 
-	require_once("modelos/administradores.php");
+	require_once("modelos/usuarios.php");
 
 	$nombre = isset($_POST['nombre'])?$_POST['nombre']:"";
 	$clave = isset($_POST['clave'])?$_POST['clave']:"";
 
 	if($nombre != "" && $clave != "" && isset($_POST['action']) && $_POST['action'] == "login"){
 
-		$objAdministradores = new administradores();
-		$respuesta = $objAdministradores->login($nombre, $clave);
+		$objUsuarios= new usuarios();
+		$respuesta = $objUsuarios->login($nombre, $clave);
 
 		if($respuesta == "OK"){
 			header('Location: index.php');
@@ -58,14 +58,14 @@ if(isset($respuesta) && $respuesta == "Error"){
 ?>
 					        <div class="row">
 						        <div class="input-field col s12">
-							        <input id="nombre" type="text" class="validate" name="nombre" >
+							        <input id="nombre" type="text" class="validate" name="nombre" autocomplete="off">
 							        <label for="nombre">Nombre</label>
                                 </div>
 					        </div>
 
 					        <div class="row">					
 						        <div class="input-field col s12">
-							        <input id="clave" type="password" class="validate" name="clave">
+							        <input id="clave" type="password" class="validate" name="clave" autocomplete="off">
 							        <label for="clave">Clave</label>
 						        </div>
 					        </div>

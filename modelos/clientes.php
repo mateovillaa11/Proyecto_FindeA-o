@@ -167,9 +167,9 @@
 
             $sql= 'SELECT 
                         CI,
-                        CONCAT(nombre, "-".,CI) AS nombre
-                        FROM cliente,
-						WHERE esatado = 1';
+                        CONCAT(nombre, "-" , CI) AS nombre
+                        FROM cliente
+						WHERE estado = 1';
                     
             $arrayDatos = array();
             $retorno = $this->cargarDatos($sql, $arrayDatos);

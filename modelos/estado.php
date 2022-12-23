@@ -21,7 +21,7 @@
 
         public function constructor($arrayDatos = array()) {
 
-            $this->CI		= $this->extarerDatos($arrayDatos,'id');
+            $this->id		= $this->extarerDatos($arrayDatos,'id');
 
             $this->nombre	= $this->extarerDatos($arrayDatos,'nombre');
 
@@ -39,7 +39,6 @@
             $retorno = $this->cargarDatos($sql, $arrayDatos);
             return $retorno;
         }
-
     
      }
 

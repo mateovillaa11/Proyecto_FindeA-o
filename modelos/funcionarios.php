@@ -45,7 +45,7 @@
 
 		public function constructor($arrayDatos = array()) {
 
-			$this->CI		= $this->extarerDatos($arrayDatos,'ci');
+			$this->ci		= $this->extarerDatos($arrayDatos,'ci');
 
 			$this->nombre	= $this->extarerDatos($arrayDatos,'nombre');
 
@@ -86,12 +86,20 @@
 
 		public function listarFuncionarios($filtros= array()){
 
-			$sql= "SELECT * FROM funcionarios 
-					WHERE estado = 1"; 
+			$sql= "SELECT funcionarios.ci,
+						funcionarios.nombre,
+						funcionarios.apellido,
+						funcionarios.telefono,
+						funcionarios.correo,
+						cargo.nombre 'cargo'
+					FROM funcionarios 
+						inner join cargo on cargo.id  = funcionarios.id_cargo
+						where funcionarios.estado = 1"; 
 
 			if(isset($filtros['busqueda']) && $filtros['busqueda'] != ""){
-			$sql .= " AND (nombre LIKE ('%".$filtros['busqueda']."%')";
-			$sql .= " OR apellido LIKE ('%".$filtros['busqueda']."%'))";
+			$sql .= " AND (funcionarios.nombre LIKE ('%".$filtros['busqueda']."%')";
+			$sql .= " OR funcionarios.apellido LIKE ('%".$filtros['busqueda']."%')";
+			$sql .= " OR cargo.nombre LIKE ('%".$filtros['busqueda']."%'))";
 			
 			}
 
@@ -128,28 +136,27 @@
 			return $retorno;
 		}
 
-		public function ingresarFuncionarios() {
+		public function ingresarFuncionario() {
 
 			$sqlInsert = "INSERT funcionarios SET
-							ci			= :ci,
+							ci 			= :ci,
 							nombre 		= :nombre,
 							apellido 	= :apellido,
 							telefono 	= :telefono,
-                            correo      =:correo,
-                            id_cargo    =:id_cargo,
+							correo 		= :correo,
+							id_cargo	= :id_cargo,
 							estado 		= 1";
-
 
 			$arraySql = array(
 							"ci" 		=> $this->ci,
 							"nombre" 	=> $this->nombre,
 							"apellido" 	=> $this->apellido,
 							"telefono" 	=> $this->telefono,
-                            "correo" 	=> $this->correo,
-                            "id_cargo" 	=> $this->id_cargo,
+							"correo" 	=> $this->correo,
+							"id_cargo" 	=> $this->id_cargo,
 						);
 
-            $retorno = $this->imputarCambio($sqlInsert,$arraySql);
+			$retorno = $this->imputarCambio($sqlInsert,$arraySql);
 
 			return $retorno;
 
@@ -162,7 +169,7 @@
 							apellido 	= :apellido,
 							telefono 	= :telefono,
                             correo  	= :correo,
-                            id_cargo    =:id_cargo 
+                            id_cargo    = :id_cargo 
 							WHERE ci	= :ci";
 
 			$arraySql = array(
@@ -171,6 +178,7 @@
 							"apellido" 	=> $this->apellido,
 							"telefono" 	=> $this->telefono,
                             "correo" 	=> $this->correo,
+							"id_cargo" 	=> $this->id_cargo,
 						);
             $retorno = $this->imputarCambio($sqlInsert,$arraySql);
 			return $retorno;
@@ -180,7 +188,7 @@
 		public function borrarFuncionarios() {
 
             $sqlInsert = "UPDATE funcionarios  SET estado = 0 WHERE ci =:ci";
-             $arraySql = array(
+            $arraySql = array(
                                 "ci"=> $this->ci,
                             );
                 

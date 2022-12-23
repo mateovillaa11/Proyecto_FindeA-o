@@ -3,7 +3,7 @@
 require_once("modelos/generico.php");
 
 
-class administradores extends generico {
+class usuarios extends generico {
 
 
 	protected $nombre;
@@ -11,6 +11,8 @@ class administradores extends generico {
 	protected $clave;
 
 	protected $mail;
+
+    protected $rol;
 
 
 	public function traerNombre(){
@@ -21,13 +23,17 @@ class administradores extends generico {
 		return $this->mail;
 	}
 
+    public function traerRol(){
+		return $this->rol;
+	}
+
 
 
 
 	public function login($usuario, $clave){
 
 
-		$sql = "SELECT * FROM administradores 
+		$sql = "SELECT * FROM usuarios 
 					WHERE nombre = :nombre AND clave = :clave";
 		$arrayDatos = array();
 		$arrayDatos['nombre'] 	= $usuario;
@@ -37,6 +43,7 @@ class administradores extends generico {
 		foreach($respuesta as $usuario){
 
 			@session_start();
+			$_SESSION['rol'] = $usuario['rol'];
 			$_SESSION['nombre'] = $usuario['nombre'];
 			return "OK";
 

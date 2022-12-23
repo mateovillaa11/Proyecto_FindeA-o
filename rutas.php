@@ -10,6 +10,8 @@
 		include("vistas/envios_vistas.php");
 	}elseif($ruta == "funcionarios"){
 		include("vistas/funcionarios_vistas.php");
+	}else{
+		include("vistas/principal_vista.php");
 	}	
 
 

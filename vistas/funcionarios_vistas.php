@@ -19,7 +19,7 @@
 
 			$objFuncionarios->constructor($arrayDatos);
 
-			$respuesta = $objFuncionarios->ingresarFuncionarios();
+			$respuesta = $objFuncionarios->ingresarFuncionario();
 
 		}
 
@@ -136,17 +136,17 @@
 						<div class="row">
 							<div class="input-field col s12">
 								<input id="correo" type="email" class="validate" name="correo" value="<?=$objFuncionarios->traerCorreo()?>">
-								<label for="correo">Correo</label>
+								<label for="correo">correo</label>
 							</div>
 						</div>
 						<div class="input-field col s16">
-    						<select>
+    						<select name="id_cargo">
 								
-      							<option value="" disabled selected><?=$objFuncionarios->traerCargo()?></option>
+      							<option value="" disabled selected></option>
 <?php
 	foreach($listaCargoSelect as $cargo ){
 ?>
-								<option value="<?=$cargo['id']?>"><?=$cargo['nombre']?></option>
+								<option value="<?=$cargo['id']?>"<?php if($cargo ['id'] == $objFuncionarios->traerCargo()){echo("selected");} ?> ><?=$cargo['nombre']?></option>
 
 <?php
 	}
@@ -157,7 +157,7 @@
   						</div>
 
 						<div class="row">
-							<input  type="hidden" name="CI" value="<?=$objFuncionarios->traerDocumento()?>">
+							<input  type="hidden" name="ci" value="<?=$objFuncionarios->traerDocumento()?>">
 							
 							<button class="btn waves-effect waves-light right cyan" type="submit" name="action-guardar" value="editar">Guardar
 								<i class="material-icons right">save</i>
@@ -188,7 +188,7 @@
 						</div>
 
 						<div class="row">
-							<input  type="hidden" name="CI" value="<?=$objFuncionarios->traerDocumento()?>">
+							<input  type="hidden" name="ci" value="<?=$objFuncionarios->traerDocumento()?>">
 							<div class="input-field col s2">
 								<button class="btn waves-effect waves-light right red" type="submit" name="action-borrar" value="borrar">Borrar
 									<i class="material-icons right">delete</i>
@@ -252,31 +252,31 @@
 
 					<div class="row">
 							<div class="input-field col s12">
-								<input id="ci" type="number" class="validate" name="ci">
+								<input id="ci" type="number" class="validate" name="ci" autocomplete="off">
 								<label for="ci">CI</label>
 							</div>
 					</div>
 					<div class="row">
 						<div class="input-field col s6">
-							<input id="nombre" type="text" class="validate" name="nombre">
+							<input id="nombre" type="text" class="validate" name="nombre" autocomplete="off">
 							<label for="nombre">Nombre</label>
 						</div>
 						<div class="input-field col s6">
-							<input id="apellido" type="text" class="validate" name="apellido">
+							<input id="apellido" type="text" class="validate" name="apellido" autocomplete="off">
 							<label for="apellido">Apellido</label>
 						</div>
 					</div>
 					<div class="row">
 						<div class="input-field col s12">
-							<input id="telefono" type="number" class="validate" name="telefono">
+							<input id="telefono" type="number" class="validate" name="telefono" autocomplete="off">
 							<label for="telefono">telefono</label>
 						</div>
 						<div class="input-field col s16">
-							<input id="correo" type="email" class="validate" name="correo">
+							<input id="correo" type="email" class="validate" name="correo" autocomplete="off">
 							<label for="correo">correo</label>
 						</div>
 						<div class="input-field col s16">
-    						<select>
+    						<select name="id_cargo">
       							<option value="" disabled selected>cargo</option>
       							
 <?php
@@ -311,7 +311,7 @@
 				<form action="index.php?" method="GET">
 					<div class="input-field ">
 						<input type="hidden" name="r" value="<?=$ruta?>">
-						<input id="search" type="search" name="busqueda" required>
+						<input id="search" type="search" name="busqueda" required autocomplete="off">
 						<label class="label-icon" for="search">
 							<i class="material-icons">search</i>
 						</label>
@@ -325,7 +325,7 @@
               <th>Nombre</th>
               <th>Apellido</th>
 			  <th>Teléfono</th>
-			  <th>Correo</th>
+			  <th>correo</th>
 			  <th>Cargo</th>
 
 			  <th></th>
@@ -344,7 +344,7 @@
 				<td><?=$funcionario['apellido']?></td>
 				<td><?=$funcionario['telefono']?></td>
 				<td><?=$funcionario['correo']?></td>
-				<td ><?=$cargo['nombre']?></td>
+				<td ><?=$funcionario['cargo']?></td>
 				<td>
 					<div class="right-aling">
                         <a href="index.php?r=<?=$ruta?>&a=editar&CI=<?=$funcionario['ci']?>" class="waves-effect cyan btn-floating">

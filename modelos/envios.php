@@ -45,7 +45,7 @@
 			return $this->puerta;
 		}
         public function traerFechaRecibido(){
-			return $this->fechaRecibido;
+			return $this->FechaRecibido;
 		}
         public function traerIdEstado(){
 			return $this->id_estado;
@@ -66,7 +66,7 @@
 
             $this->puerta			= $this->extarerDatos($arrayDatos,'puerta');
 
-            $this->fechaRecibido	= $this->extarerDatos($arrayDatos,'fechaRecibido');
+            $this->FechaRecibido	= $this->extarerDatos($arrayDatos,'FechaRecibido');
 
             $this->id_estado		= $this->extarerDatos($arrayDatos,'id_estado');
 
@@ -94,7 +94,7 @@
 
                 $this->puerta           = $envios['puerta'];
 
-                $this->fechaRecibido    = $envios['fechaRecibido'];
+                $this->FechaRecibido    = $envios['FechaRecibido'];
 
                 $this->id_estado        = $envios['id_estado'];
 			}
@@ -103,13 +103,25 @@
 
 		public function listarEnvios($filtros= array()){
 
-			$sql= "SELECT * FROM envios
-					WHERE estado = 1"; 
+			$sql= "SELECT 	envios.id,
+							envios.CI_cliente 'CI_cliente',
+							envios.destinatario,
+							departamentos.nombre'departamentos',
+							envios.calle ,
+							envios.puerta,
+							envios.FechaRecibido,
+							estado.nombre 'EstadoPaquete'
+					FROM envios 
+							inner join departamentos on departamentos.id  = envios.id_departamentos
+							inner join cliente on cliente.CI  = envios.CI_cliente 
+							inner join estado on estado.id = envios.id_estado 
+							where envios.estado = 1"; 
+			
 
 			if(isset($filtros['busqueda']) && $filtros['busqueda'] != ""){
-			$sql .= " AND (nombre LIKE ('%".$filtros['busqueda']."%')";
-			$sql .= " OR apellido LIKE ('%".$filtros['busqueda']."%'))";
-			
+			$sql .= " AND (envios.destinatario LIKE ('%".$filtros['busqueda']."%')";
+			$sql .= " OR estado.nombre LIKE ('%".$filtros['busqueda']."%')";
+			$sql .= " OR  departamentos.nombre LIKE ('%".$filtros['busqueda']."%'))";
 			}
 
 			if(isset ($filtros['totalRegistros']) && $filtros['totalRegistros']>0){
@@ -148,26 +160,24 @@
 		public function ingresarEnvios() {
 
 			$sqlInsert = "INSERT envios SET
-							id			        = :id,
 							CI_cliente	        = :CI_cliente,
 							destinatario 	    = :destinatario,
 							id_departamentos 	= :id_departamentos,
                             calle               =:calle,
                             puerta              =:puerta,
-                            fechaRecibido       =:fechaRecibido,
+                            FechaRecibido       =:FechaRecibido,
                             id_estado           =:id_estado,
 							estado 		        = 1";
 
 
 			$arraySql = array(
-							"id" 		        => $this->id,
 							"CI_cliente" 	    => $this->CI_cliente,
 							"destinatario"  	=> $this->destinatario,
 							"id_departamentos" 	=> $this->id_departamentos,
                             "calle" 	        => $this->calle,
                             "puerta" 	        => $this->puerta,
-                            "fechaRecibido" 	=> $this->fechaRecibido,
-                            "id_estado" 	    => $this->id_estado,
+                            "FechaRecibido" 	=> $this->FechaRecibido,
+                            "id_estado" 	    => $this->id_estado
 						);
 
             $retorno = $this->imputarCambio($sqlInsert,$arraySql);
@@ -179,26 +189,25 @@
 		public function editarEnvios() {
 
 			$sqlInsert = "UPDATE envios SET
-							id 		          = :id,
-							CI_cliente       = :CI_cliente,
-							destinatario      = :destinatario,
-                            id_departamentos  = :id_departamentos,
-                            calle             =:calle,
-                            puerta            =:puerta,
-                            fechaRecibido     =:fechaRecibido,
-                            id_estado         =:id_estado 
-							WHERE id = :id";
+							CI_cliente 		 = :CI_cliente,
+							destinatario 	 = :destinatario,
+							id_departamentos = :id_departamentos,
+                            calle  			 = :calle,
+                            puerta   	 	 = :puerta,
+							FechaRecibido    = :FechaRecibido,
+							id_estado    	 = :id_estado
+							WHERE id		 = :id";
 
 			$arraySql = array(
-                            "id" 		        => $this->id,
-                            "CI_cliente" 	    => $this->CI_cliente,
-                            "destinatario"  	=> $this->destinatario,
-                            "id_departamentos" 	=> $this->id_departamentos,
-                            "calle" 	        => $this->calle,
-                            "puerta" 	        => $this->puerta,
-                            "fechaRecibido" 	=> $this->fechaRecibido,
-                            "id_estado" 	    => $this->id_estado,
-						);
+							"id" 	    		=> $this->id,
+							"CI_cliente" 	    => $this->CI_cliente,
+							"destinatario"  	=> $this->destinatario,
+							"id_departamentos" 	=> $this->id_departamentos,
+							"calle" 	        => $this->calle,
+							"puerta" 	        => $this->puerta,
+							"FechaRecibido" 	=> $this->FechaRecibido,
+							"id_estado" 	    => $this->id_estado,
+			);
             $retorno = $this->imputarCambio($sqlInsert,$arraySql);
 			return $retorno;
 
